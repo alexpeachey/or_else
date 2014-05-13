@@ -73,7 +73,7 @@ module OrElse
     describe '#or_else' do
       let(:val) { 1 }
 
-      specify { expect(just.or_else).to eq just }
+      specify { expect(just.or_else).to eq 1 }
     end
 
   end

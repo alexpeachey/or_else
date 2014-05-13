@@ -24,7 +24,7 @@ module OrElse
     end
 
     def or_else
-      self
+      value
     end
   end
 end
