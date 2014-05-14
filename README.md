@@ -24,15 +24,15 @@ value.empty?              # => true
 value.nil?                # => true
 value.exists?             # => false
 value.map { |v| v }       # => Nothing (Block is ignored)
-value.flat_map { |v| v }  # => Nothing (Block is ignored)
+value.flat_map { |v| Maybe(v) }  # => Nothing (Block is ignored)
 value.or_else { 'foo' }   # => 'foo'
 
 value = Maybe('value')    # => <OrElse::Just>
 value.empty?              # => false
 value.nil?                # => false
 value.exists?             # => true
-value.map { |v| v }       # => <OrElse::Just> (Block is yielded the value wrapped in a new Just)
-value.flat_map { |v| v }  # => 'value' (Block is yielded the bare value)
+value.map { |v| v }       # => <OrElse::Just> (Block is yielded the bare value and the block is wrapped in a Maybe)
+value.flat_map { |v| Maybe(v) }  # => <OrElse::Just> (Block is yielded the bare value)
 value.or_else { 'foo' }   # => 'value' (Block is ignored)
 ```
 

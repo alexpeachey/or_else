@@ -26,20 +26,24 @@ module OrElse
       context 'when initialized with 1' do
         let(:val) { 1 }
 
-        specify { expect { |b| just.map(&b) }.to yield_with_args(Just) }
+        specify { expect { |b| just.map(&b) }.to yield_with_args(val) }
 
-        it 'yields a Just with the value 1' do
-          just.map { |j| expect(j.value).to eq 1 }
+        it 'yields the value 1 and wraps the block in a Maybe' do
+          expect(just.map { |j| j }.value).to eq val
+        end
+
+        it 'yields the value 1 and is Nothing when the block evaluates to nil' do
+          expect(just.map { |j| nil }).to eq Nothing
         end
       end
 
       context 'when initialized with "foo"' do
         let(:val) { 'foo' }
 
-        specify { expect { |b| just.map(&b) }.to yield_with_args(Just) }
+        specify { expect { |b| just.map(&b) }.to yield_with_args(val) }
 
-        it 'yields a Just with the value "foo"' do
-          just.map { |j| expect(j.value).to eq 'foo' }
+        it 'yields the value "foo" and wraps the block in a Maybe' do
+          expect(just.map { |j| j }.value).to eq val
         end
       end
     end
@@ -48,13 +52,13 @@ module OrElse
       context 'when initialized with 1' do
         let(:val) { 1 }
 
-        specify { expect { |b| just.flat_map(&b) }.to yield_with_args(1) }
+        specify { expect { |b| just.flat_map(&b) }.to yield_with_args(val) }
       end
 
       context 'when initialized with "foo"' do
         let(:val) { 'foo' }
 
-        specify { expect { |b| just.flat_map(&b) }.to yield_with_args('foo') }
+        specify { expect { |b| just.flat_map(&b) }.to yield_with_args(val) }
       end
     end
 

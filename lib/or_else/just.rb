@@ -8,7 +8,7 @@ module OrElse
     end
 
     def map
-      yield Just.new(value)
+      Maybe(yield value)
     end
 
     def flat_map
