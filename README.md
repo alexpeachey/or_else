@@ -19,21 +19,27 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-value = Maybe(nil)        # => <OrElse::NothingClass>
+value = Maybe(nil)        # => Nothing
 value.empty?              # => true
 value.nil?                # => true
 value.exists?             # => false
-value.map { |v| v }       # => <OrElse::NothingClass>
-value.flat_map { |v| v }  # => <OrElse::NothingClass>
+value.map { |v| v }       # => Nothing (Block is ignored)
+value.flat_map { |v| v }  # => Nothing (Block is ignored)
 value.or_else { 'foo' }   # => 'foo'
 
 value = Maybe('value')    # => <OrElse::Just>
 value.empty?              # => false
 value.nil?                # => false
 value.exists?             # => true
-value.map { |v| v }       # => 'value'
-value.flat_map { |v| v }  # => 'value'
-value.or_else { 'foo' }   # => 'value'
+value.map { |v| v }       # => <OrElse::Just> (Block is yielded the value wrapped in a new Just)
+value.flat_map { |v| v }  # => 'value' (Block is yielded the bare value)
+value.or_else { 'foo' }   # => 'value' (Block is ignored)
+```
+
+Real life example:
+
+```
+comment = Maybe(post.comments.first).or_else { post.comments.build }
 ```
 
 ## Contributing
