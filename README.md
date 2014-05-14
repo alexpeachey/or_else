@@ -19,29 +19,33 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-value = Maybe(nil)              # => Nothing
-value.empty?                    # => true
-value.nil?                      # => true
-value.exists?                   # => false
+# Nothings
+value = Maybe(nil)                  # => Nothing
+Maybe(nil).empty?                   # => true
+Maybe(nil).nil?                     # => true
+Maybe(nil).exists?                  # => false
 # Block is ignored
-value.map { |v| v }             # => Nothing
+Maybe(nil).map { |v| v }            # => Nothing
 # Block is ignored
-value.flat_map { |v| Maybe(v) } # => Nothing
+Maybe(nil).flat_map { |v| v }       # => Nothing
 # Returns the result of the block
-value.or_else { 'foo' }         # => 'foo'
+Maybe(nil).or_else { 'foo' }        # => 'foo'
 
-value = Maybe('value')          # => <OrElse::Just>
-value.empty?                    # => false
-value.nil?                      # => false
-value.exists?                   # => true
-# Block is yielded the bare value and the result of the block is wrapped in a Maybe
-value.map { |v| v }             # => <OrElse::Just>
-# Block is yielded the bare value, and the block exists with a Maybe so it is left as is
-value.flat_map { |v| Maybe(v) } # => <OrElse::Just> (Block is yielded the bare value)
-# Block is yielded the bare value, but did not exit with a Maybe so it is wrapped
-value.flat_map { |v| v }        # => <OrElse::Just>
+# Justs
+Maybe('value')                      # => Just('value')
+Maybe('value').empty?               # => false
+Maybe('value').nil?                 # => false
+Maybe('value').exists?              # => true
+Maybe('value').map { |v| v }        # => Just('value')
+Maybe('value').flat_map { |v| v }   # => Maybe('value')
 # Block is ignored
-value.or_else { 'foo' }         # => 'value'
+Maybe('value').or_else { 'foo' }    # => 'value'
+
+#more examples
+Maybe(1).map { |v| nil }            # => Just(nil)
+Maybe(1).map { |v| Maybe(v) }       # => Just(Maybe(1))
+Maybe(1).flat_map { |v| nil }       # => Nothing
+Maybe(1).flat_map { |v| Maybe(v) }  # => Maybe(1)
 ```
 
 Real life example:

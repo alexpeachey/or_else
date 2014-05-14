@@ -28,12 +28,12 @@ module OrElse
 
         specify { expect { |b| just.map(&b) }.to yield_with_args(val) }
 
-        it 'yields the value 1 and wraps the block in a Maybe' do
+        it 'yields the value 1 and wraps the block in a Just' do
           expect(just.map { |j| j }.value).to eq val
         end
 
-        it 'yields the value 1 and is Nothing when the block evaluates to nil' do
-          expect(just.map { |j| nil }).to eq Nothing
+        it 'yields the value 1 and is Just(nil) when the block evaluates to nil' do
+          expect(just.map { |j| nil }.value).to eq nil
         end
       end
 
@@ -60,6 +60,12 @@ module OrElse
 
         it 'wraps the result in a Maybe' do
           expect(just.flat_map { |j| j }.value).to eq val
+        end
+
+        context 'when the block exists with a nil' do
+          it 'returns Nothing' do
+            expect(just.flat_map { |j| nil }).to eq Nothing
+          end
         end
       end
     end

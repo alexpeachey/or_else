@@ -8,12 +8,11 @@ module OrElse
     end
 
     def map
-      Maybe(yield value)
+      Just(yield value)
     end
 
     def flat_map
-      t = yield value
-      t.is_a?(Maybe) ? t : Maybe(t)
+      Maybe(yield value)
     end
 
     def empty?
