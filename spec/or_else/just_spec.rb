@@ -49,16 +49,18 @@ module OrElse
     end
 
     describe '#flat_map' do
-      context 'when initialized with 1' do
-        let(:val) { 1 }
+      context 'when initialized with Maybe(1)' do
+        let(:val) { Maybe(1) }
 
         specify { expect { |b| just.flat_map(&b) }.to yield_with_args(val) }
       end
 
-      context 'when initialized with "foo"' do
-        let(:val) { 'foo' }
+      context 'when the block result is not a Maybe' do
+        let(:val) { 1 }
 
-        specify { expect { |b| just.flat_map(&b) }.to yield_with_args(val) }
+        it 'wraps the result in a Maybe' do
+          expect(just.flat_map { |j| j }.value).to eq val
+        end
       end
     end
 

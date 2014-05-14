@@ -19,21 +19,29 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-value = Maybe(nil)        # => Nothing
-value.empty?              # => true
-value.nil?                # => true
-value.exists?             # => false
-value.map { |v| v }       # => Nothing (Block is ignored)
-value.flat_map { |v| Maybe(v) }  # => Nothing (Block is ignored)
-value.or_else { 'foo' }   # => 'foo'
+value = Maybe(nil)              # => Nothing
+value.empty?                    # => true
+value.nil?                      # => true
+value.exists?                   # => false
+# Block is ignored
+value.map { |v| v }             # => Nothing
+# Block is ignored
+value.flat_map { |v| Maybe(v) } # => Nothing
+# Returns the result of the block
+value.or_else { 'foo' }         # => 'foo'
 
-value = Maybe('value')    # => <OrElse::Just>
-value.empty?              # => false
-value.nil?                # => false
-value.exists?             # => true
-value.map { |v| v }       # => <OrElse::Just> (Block is yielded the bare value and the block is wrapped in a Maybe)
-value.flat_map { |v| Maybe(v) }  # => <OrElse::Just> (Block is yielded the bare value)
-value.or_else { 'foo' }   # => 'value' (Block is ignored)
+value = Maybe('value')          # => <OrElse::Just>
+value.empty?                    # => false
+value.nil?                      # => false
+value.exists?                   # => true
+# Block is yielded the bare value and the result of the block is wrapped in a Maybe
+value.map { |v| v }             # => <OrElse::Just>
+# Block is yielded the bare value, and the block exists with a Maybe so it is left as is
+value.flat_map { |v| Maybe(v) } # => <OrElse::Just> (Block is yielded the bare value)
+# Block is yielded the bare value, but did not exit with a Maybe so it is wrapped
+value.flat_map { |v| v }        # => <OrElse::Just>
+# Block is ignored
+value.or_else { 'foo' }         # => 'value'
 ```
 
 Real life example:
