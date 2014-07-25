@@ -1,8 +1,6 @@
 module OrElse
   class Just < Maybe
 
-    attr_reader :value
-
     def initialize(val)
       @value = val
     end
@@ -23,9 +21,30 @@ module OrElse
       !empty?
     end
 
+    def present?
+      exists?
+    end
+
     def or_else
       value
     end
+
+    def each
+      yield value
+      nil
+    end
+
+    def all?
+      !!(yield value)
+    end
+
+    def any?(&block)
+      all?(&block)
+    end
+
+    private
+
+    attr_reader :value
   end
 end
 

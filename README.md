@@ -30,6 +30,12 @@ Maybe(nil).map { |v| v }            # => Nothing
 Maybe(nil).flat_map { |v| v }       # => Nothing
 # Returns the result of the block
 Maybe(nil).or_else { 'foo' }        # => 'foo'
+# Block is ignored
+Maybe(nil).each { |v| puts v }      # => nil
+# Block is ignored
+Maybe(nil).all? { |v| v == 1 }      # => true
+# Block is ignored
+Maybe(nil).any? { |v| v == 1 }      # => true
 
 # Justs
 Maybe('value')                      # => Just('value')
@@ -40,6 +46,13 @@ Maybe('value').map { |v| v }        # => Just('value')
 Maybe('value').flat_map { |v| v }   # => Maybe('value')
 # Block is ignored
 Maybe('value').or_else { 'foo' }    # => 'value'
+# Yields the value to the block
+Maybe('value').each { |v| puts v }  # => nil (Side effect puts 'value')
+# Is true if the block evalutes true, otherwise false
+Maybe(1).all? { |v| v == 1 }        # => true
+Maybe(1).all? { |v| v == 2 }        # => false
+# Is true if the block evalutes true, otherwise false
+Maybe(1).any? { |v| v == 1 }        # => true
 
 #more examples
 Maybe(1).map { |v| nil }            # => Just(nil)

@@ -24,8 +24,23 @@ module OrElse
       !empty?
     end
 
+    def present?
+      exists?
+    end
+
     def or_else
       yield
+    end
+
+    def each
+    end
+
+    def all?
+      true
+    end
+
+    def any?
+      all?
     end
   end
 end
