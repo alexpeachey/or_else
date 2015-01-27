@@ -13,6 +13,10 @@ module OrElse
       Maybe(yield value)
     end
 
+    def filter
+      (yield value) ? self : Nothing
+    end
+
     def empty?
       false
     end

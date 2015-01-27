@@ -12,6 +12,10 @@ module OrElse
       Nothing
     end
 
+    def filter
+      Nothing
+    end
+
     def empty?
       true
     end
