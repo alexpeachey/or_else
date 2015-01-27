@@ -60,6 +60,24 @@ module OrElse
       end
     end
 
+    describe '#filter' do
+      let(:val) { 1 }
+
+      specify { expect { |b| just.filter(&b) }.to yield_with_args(val) }
+
+      context 'when the predicate returns true' do
+        it 'returns the Just intact' do
+          expect(just.filter {|j| j == 1}).to eq just
+        end
+      end
+
+      context 'when the predicate returns false' do
+        it 'returns Nothing' do
+          expect(just.filter {|j| j != 1}).to eq Nothing
+        end
+      end
+    end
+
     describe '#empty?' do
       let(:val) { 1 }
 

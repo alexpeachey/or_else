@@ -16,6 +16,10 @@ module OrElse
       specify { expect(nothing.flat_map).to eq Nothing }
     end
 
+    describe '#filter' do
+      specify { expect(nothing.filter).to eq Nothing }
+    end
+
     describe '#empty?' do
       specify { expect(nothing.empty?).to be true }
     end
