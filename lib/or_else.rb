@@ -6,3 +6,4 @@ module OrElse
 end
 
 require 'or_else/maybe'
+require 'or_else/array'
