@@ -1,6 +1,5 @@
 module OrElse
   class Just < Maybe
-
     def initialize(val)
       @value = val
     end

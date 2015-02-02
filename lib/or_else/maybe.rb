@@ -12,3 +12,11 @@ class Object
     Maybe(self)
   end
 end
+
+module OrElse
+  class Maybe
+    def self.sequence(array)
+      Maybe(array.map { |val| val.or_else { return Nothing } })
+    end
+  end
+end
