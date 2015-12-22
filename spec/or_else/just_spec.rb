@@ -90,6 +90,12 @@ module OrElse
       specify { expect(just.exists?).to be true }
     end
 
+    describe '#present?' do
+      let(:val) { 1 }
+
+      specify { expect(just.present?).to be true }
+    end
+
     describe '#or_else' do
       let(:val) { 1 }
 

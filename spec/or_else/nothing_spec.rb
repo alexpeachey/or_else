@@ -32,6 +32,10 @@ module OrElse
       specify { expect(nothing.exists?).to be false }
     end
 
+    describe '#present?' do
+      specify { expect(nothing.present?).to be false }
+    end
+
     describe '#or_else' do
       specify { expect { |b| nothing.or_else(&b) }.to yield_control }
     end
